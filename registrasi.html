@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration FitSnap</title>
+    <link class="styles" rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body style="background-color: #f4f6f9;"> <!-- Background luar abu-abu terang agar card registrasi lebih menonjol -->
+
+<!-- NAVBAR (Warna disesuaikan dengan ciri khas FitSnap) -->
+<nav class="navbar navbar-expand-lg sticky-top" style="background-color: coral;">
+    <div class="container">
+        <a class="navbar-brand text-white fw-bold fs-4" href="index.html">JOGLO WISATA</a>
+
+        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link text-white fw-semibold" href="index.html">Beranda</a>
+                <a class="nav-link text-white" href="index.html#tentangkami">Tentang Kami</a>
+                <a class="nav-link text-white" href="index.html#layanan">Layanan</a>
+                <a class="nav-link text-white" href="index.html#kontak">Kontak</a>
+                <a class="nav-link text-white" href="login.html">Login</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="login-section d-flex align-items-center py-5" style="min-height: 85vh;">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+
+            <!-- GAMBAR LOGO -->
+            <div class="col-md-4 text-center mb-4 mb-md-0">
+                <img src="assets/wisata/logo.jpg" class="logo-login" alt="Logo">
+            </div>
+
+            <!-- FORM REGISTRASI (Card Putih Bersih dengan Border Atas Biru Tegas) -->
+            <div class="col-md-5">
+                <div class="card login-card p-4 shadow-lg border-0 rounded-4 bg-white" style="border-top: 5px solid coral !important;">
+                    <h3 class="text-center mb-4 fw-bold" style="color:black;">Registration</h3>
+
+                    <form id="formRegister">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Username</label>
+                            <input type="text" id="username" class="form-control form-control-lg fs-6" placeholder="Buat username baru" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">E-Mail</label>
+                            <input type="email" id="email" class="form-control form-control-lg fs-6" placeholder="Masukkan alamat email aktif" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Password</label>
+                            <input type="password" id="password" class="form-control form-control-lg fs-6" placeholder="Buat password minimal 6 karakter" required>
+                        </div>
+
+                        <!-- Tombol Submit Selaras Biru FitSnap -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button type="submit" class="btn text-white fw-bold px-4 shadow-sm" style="background-color: rgb(0, 118, 228);">Submit</button>
+                            <p class="mb-0 small text-muted">Sudah punya akun? <a href="login.html" class="fw-bold" style="color: rgb(0, 204, 255);">Login</a></p>
+                        </div>
+                        
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER (Disinkronkan menjadi Biru Gelap FitSnap & teks sekolah) -->
+<footer class="text-white py-3 text-center" style="background-color: coral;">
+    <p class="mb-0">&copy; UKK-ZAHRAN HAFIZH 2026</p>
+    <p class="mb-0">SMK Dinamika Pembangunan 2 Jakarta</p>
+</footer>
+
+<!-- Memanggil script pendukung UI Bootstrap -->
+<script src="bootsrap-file/js/bootstrap.bundle.min.js"></script>
+
+<!-- JAVASCRIPT REGISTRASI LOGIC (SINKRON DENGAN LOCALSTORAGE) -->
+<script>
+function register(event){
+    event.preventDefault();
+
+    let nama = document.getElementById("username").value.trim(); 
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value.trim();
+
+    if(nama == "" || email == "" || password == ""){
+        alert("Semua data harus diisi");
+        return;
+    }
+
+    let akun = JSON.parse(localStorage.getItem("akun")) || [];
+    let cek = akun.find(user => user.email === email);
+
+    if(cek){
+        alert("Email sudah terdaftar");
+        return;
+    }
+
+    akun.push({
+        username: nama, 
+        email: email,
+        password: password
+    });
+
+    localStorage.setItem("akun", JSON.stringify(akun));
+    alert("Registrasi berhasil! Silakan Login.");
+    window.location.href = "login.html"; 
+}
+
+document.getElementById("formRegister").onsubmit = register;
+</script>
+
+</body>
+</html>

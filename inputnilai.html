@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Konfirmasi Wisata</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f4f4f4;
+    }
+
+    .container{
+      width:85%;
+      margin:30px auto;
+      background:linear-gradient(to bottom,#d96d2b,#ea9a32);
+      min-height:100vh;
+      padding:20px;
+    }
+
+    /* Navbar */
+    .navbar{
+      background:#f0b332;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 25px;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:bold;
+    }
+
+    .logo img{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+    }
+
+    .menu a{
+      text-decoration:none;
+      color:black;
+      margin-left:20px;
+      font-weight:bold;
+    }
+
+    .menu a:hover{
+      color:white;
+    }
+
+    /* Card */
+    .card{
+      width:80%;
+      margin:70px auto;
+      background:#f0a72e;
+      padding:40px;
+      text-align:center;
+    }
+
+    .card h1{
+      color:white;
+      margin-bottom:30px;
+      font-size:38px;
+    }
+
+    /* Form */
+    .form-group{
+      margin-bottom:20px;
+      text-align:left;
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      color:white;
+      font-weight:bold;
+    }
+
+    input, select{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:5px;
+    }
+
+    .btn{
+      margin-top:20px;
+      padding:12px 30px;
+      border:none;
+      border-radius:20px;
+      background:#df8657;
+      color:white;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .btn:hover{
+      background:#c96f42;
+    }
+
+    /* Table */
+    table{
+      width:100%;
+      margin-top:30px;
+      border-collapse:collapse;
+      background:white;
+    }
+
+    th{
+      background:#f7f7f7;
+      padding:15px;
+      border:1px solid #ddd;
+    }
+
+    td{
+      padding:15px;
+      border:1px solid #ddd;
+      text-align:center;
+    }
+
+    /* Footer */
+    footer{
+      background:#555;
+      color:white;
+      text-align:center;
+      padding:20px;
+      margin-top:40px;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">
+      <img src="assets/wisata/logo.jpg">
+      <span>HALLO USER SELAMAT DATANG</span>
+    </div>
+
+    <div class="menu">
+      <a href="user.html">RIWAYAT PERJALANAN</a>
+      <a href="#">PROFIL</a>
+      <a href="index.html" onclick="logout()">LOGOUT</a>
+    </div>
+  </div>
+
+  <!-- Isi -->
+  <div class="card">
+
+    <h1>Konfirmasi Jumlah Orang</h1>
+
+    <!-- Form Input -->
+    <div class="form-group">
+      <label>Nama</label>
+      <input type="text" id="nama" placeholder="Masukkan Nama">
+    </div>
+
+    <div class="form-group">
+      <label>Paket Wisata</label>
+      <select id="paket">
+        <option>Paket Bali</option>
+        <option>Paket Bandung</option>
+        <option>Paket Jogja</option>
+        <option>Paket Bromo</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Tanggal</label>
+      <input type="date" id="tanggal">
+    </div>
+
+    <div class="form-group">
+      <label>Jumlah Orang</label>
+      <input type="number" id="jumlah" placeholder="Masukkan Jumlah Orang">
+    </div>
+
+    <button class="btn" onclick="tambahData()">
+      Simpan
+    </button>
+
+    <!-- Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Paket Wisata</th>
+          <th>Tanggal</th>
+          <th>Jumlah Orang</th>
+        </tr>
+      </thead>
+
+      <tbody id="tableData">
+
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© Jasa Wisata - Zahran Hafizh</p>
+    <p>SMK Dinamika Pembangunan 2 Jakarta</p>
+  </footer>
+
+</div>
+
+<script>
+
+  let nomor = 1;
+
+  function tambahData(){
+
+    let nama = document.getElementById("nama").value;
+    let paket = document.getElementById("paket").value;
+    let tanggal = document.getElementById("tanggal").value;
+    let jumlah = document.getElementById("jumlah").value;
+
+    if(nama == "" || tanggal == "" || jumlah == ""){
+      alert("Harap isi semua data!");
+      return;
+    }
+
+    let table = document.getElementById("tableData");
+
+    table.innerHTML += `
+      <tr>
+        <td>${nomor++}</td>
+        <td>${nama}</td>
+        <td>${paket}</td>
+        <td>${tanggal}</td>
+        <td>${jumlah}</td>
+      </tr>
+    `;
+
+    // Reset form
+    document.getElementById("nama").value = "";
+    document.getElementById("tanggal").value = "";
+    document.getElementById("jumlah").value = "";
+
+  }
+
+  function logout(){
+    alert("Anda berhasil logout!");
+  }
+
+</script>
+
+</body>
+</html>

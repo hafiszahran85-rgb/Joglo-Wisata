@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Web UKK</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top" style="background-color: coral;">
+    <div class="container">
+        <a class="navbar-brand text-white" href="#beranda">FitSnap</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link text-white" href="index.html">Beranda</a>
+                <a class="nav-link text-white" href="index.html#tentangkami">Tentang Kami</a>
+                <a class="nav-link text-white" href="index.html#layanan">Layanan</a>
+                <a class="nav-link text-white" href="index.html#kontak">Kontak</a>
+                <a class="nav-link text-white" href="login.html">Login</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="login-section d-flex align-items-center py-5">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+
+            <div class="col-md-4 text-center mb-4 mb-md-0">
+                <img src="assets/wisata/logo.jpg" class="logo-login" alt="Logo">
+            </div>
+
+            <div class="col-md-5">
+                <div class="login-card p-4 shadow">
+                    <h3 class="text-center mb-4">Login</h3>
+
+                    <form id="formLogin">
+                        <div class="mb-3">
+                            <label class="form-label">Username / Email</label>
+                            <input type="text" id="username" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" id="password" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Level Akses</label>
+                            <select id="level" class="form-select" required>
+                                <option value="">Pilih Level</option>
+                                <option value="Admin">Admin</option>
+                                <option value="User">User</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="reset" class="btn btn-secondary">Batal</button>
+                        </div>
+
+                        <p class="text-center mt-3 mb-0">
+                            Belum punya akun? <a href="registrasi.html">Klik disini</a>
+                        </p>
+                        
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<br><br><br><br><br><br><br><br><br>
+<footer class="text-white py-3 text-center" style="background-color: gray;">
+    <p class="mb-0">&copy; UKK-ZAHRAN HAFIZH 2026</p>
+    <p class="mb-0">SMK Dinamika Pembangunan 2 Jakarta</p>
+</footer>
+
+<script src="bootsrap-file/js/bootstrap.bundle.min.js"></script>
+
+<!-- JAVASCRIPT LOGIN INTEGRASI LOCALSTORAGE -->
+<script>
+document.getElementById("formLogin").onsubmit = function(e) {
+    e.preventDefault();
+
+    let u = document.getElementById("username").value.trim();
+    let p = document.getElementById("password").value.trim();
+    let l = document.getElementById("level").value;
+
+    let dataAkun = JSON.parse(localStorage.getItem("akun")) || [];
+
+    // Logika Bypass Admin
+    if (u === "admin" && p === "admin1234" && l === "Admin") {
+        alert("Login Berhasil sebagai Admin!");
+        
+        // Simpan sesi login admin
+        localStorage.setItem("userLogin", JSON.stringify({ username: "Admin", level: "Admin" }));
+        window.location.href = "admin.html";
+        return; 
+    }
+
+    // PERBAIKAN: Mengubah user.nama menjadi user.username agar sesuai data registrasi
+    let userDitemukan = dataAkun.find(user => (user.username === u || user.email === u) && user.password === p);
+
+    if (userDitemukan && l === "User") {
+        alert("Login Berhasil! Selamat datang " + userDitemukan.username);
+        
+        // Menyimpan data user yang sedang login agar bisa dipanggil di halaman user.html
+        localStorage.setItem("userLogin", JSON.stringify(userDitemukan));
+        window.location.href = "user.html";
+    } else {
+        alert("Login Gagal! Username, Password, atau Level Akses tidak sesuai.");
+    }
+};
+</script>
+
+</body>
+</html>
